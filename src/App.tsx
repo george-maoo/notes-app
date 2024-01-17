@@ -3,6 +3,7 @@ import NotesContainer from "./NotesContainer.tsx";
 import noteService from "./services/noteService.ts";
 import { useEffect, useState } from "react";
 import { notes } from "./types.ts";
+import { NotesContext } from "./contexts/notesContext.ts";
 
 const App = () => {
   const [notes, setNotes] = useState<notes>([]);
@@ -12,11 +13,13 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Notes</h1>
-      <NoteForm setNotes={setNotes} notes={notes} />
-      <NotesContainer notes={notes} />
-    </div>
+    <NotesContext.Provider value={{ notes, setNotes }}>
+      <div className="container">
+        <h1 className="header">Notes</h1>
+        <NoteForm />
+        <NotesContainer />
+      </div>
+    </NotesContext.Provider>
   );
 };
 

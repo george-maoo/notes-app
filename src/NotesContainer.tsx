@@ -1,4 +1,6 @@
-import { note, notes } from "./types.ts";
+import { note } from "./types.ts";
+import { useContext } from "react";
+import { NotesContext } from "./contexts/notesContext.ts";
 
 const Note = ({ note }: { note: note }) => {
   return (
@@ -9,7 +11,9 @@ const Note = ({ note }: { note: note }) => {
   );
 };
 
-const NotesContainer = ({ notes }: { notes: notes }) => {
+const NotesContainer = () => {
+  const { notes } = useContext(NotesContext);
+
   return (
     <div className="notes-container">
       <ul className="notes-list">

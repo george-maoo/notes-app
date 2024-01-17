@@ -1,24 +1,18 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import noteService from "./services/noteService.ts";
-import { note, notes } from "./types.ts";
+import { note } from "./types.ts";
+import { NotesContext } from "./contexts/notesContext.ts";
 
-const NoteForm = ({
-  setNotes,
-  notes,
-}: {
-  setNotes: React.Dispatch<any>;
-  notes: notes;
-}) => {
+const NoteForm = () => {
+  const { notes, setNotes } = useContext(NotesContext);
   const [message, setMessage] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-
     const newNote: note = { message, important: false };
 
     noteService.createNote(newNote).then((note) => {
-      setNotes(notes.concat(note));
-      console.log(note);
+      setNotes([...notes, note]);
     });
 
     setMessage("");
