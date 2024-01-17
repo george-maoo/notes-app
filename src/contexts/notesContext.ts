@@ -1,5 +1,10 @@
 import { createContext } from "react";
-import { NoteContext } from "../types.ts";
+import { notes } from "../types.ts";
+
+type NoteContext = {
+  notes: notes;
+  setNotes: (notes: notes) => void;
+};
 
 export const NotesContext = createContext<NoteContext>({
   notes: [],
