@@ -1,14 +1,27 @@
 import { FormEvent, useState } from "react";
+import noteService from "./services/noteService.ts";
+import { note, notes } from "./types.ts";
 
-const NoteForm = () => {
-  const [noteMessage, setNoteMessage] = useState<string>("");
+const NoteForm = ({
+  setNotes,
+  notes,
+}: {
+  setNotes: React.Dispatch<any>;
+  notes: notes;
+}) => {
+  const [message, setMessage] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    console.log(noteMessage);
+    const newNote: note = { message, important: false };
 
-    setNoteMessage("");
+    noteService.createNote(newNote).then((note) => {
+      setNotes(notes.concat(note));
+      console.log(note);
+    });
+
+    setMessage("");
   };
 
   return (
@@ -17,8 +30,8 @@ const NoteForm = () => {
       <input
         id="note-message"
         type="text"
-        onChange={(e) => setNoteMessage(e.target.value)}
-        value={noteMessage}
+        onChange={(e) => setMessage(e.target.value)}
+        value={message}
         name="note-message"
       />
       <button type="submit">Create note</button>

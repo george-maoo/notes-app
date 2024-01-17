@@ -7,6 +7,12 @@ const getNotes = async (): Promise<[note]> => {
   return res.data;
 };
 
+const createNote = async (note: note): Promise<note> => {
+  const res = await axios.post(url, note);
+  return res.data;
+};
+
 export default {
   getNotes,
+  createNote,
 };
