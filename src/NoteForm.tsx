@@ -12,7 +12,7 @@ const NoteForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="note-form" onSubmit={handleSubmit}>
       <label htmlFor="note-message">Message:</label>{" "}
       <input
         id="note-message"
