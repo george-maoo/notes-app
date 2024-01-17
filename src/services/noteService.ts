@@ -17,8 +17,13 @@ const updateNote = async (note: note): Promise<note> => {
   return res.data;
 };
 
+const deleteNote = async (note: note): Promise<void> => {
+  await axios.delete(`${url}/${note.id}`);
+};
+
 export default {
-  getNotes,
   createNote,
+  getNotes,
   updateNote,
+  deleteNote,
 };

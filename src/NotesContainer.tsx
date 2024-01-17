@@ -6,9 +6,11 @@ import noteService from "./services/noteService.ts";
 const Note = ({
   note,
   toggleNoteImportance,
+  deleteNote,
 }: {
   note: note;
   toggleNoteImportance: (note: note) => void;
+  deleteNote: (note: note) => void;
 }) => {
   return (
     <li className="note">
@@ -16,6 +18,7 @@ const Note = ({
       <button onClick={() => toggleNoteImportance(note)}>
         {note.important ? "important" : "not important"}
       </button>
+      <button onClick={() => deleteNote(note)}>Delete note</button>
     </li>
   );
 };
@@ -32,6 +35,12 @@ const NotesContainer = () => {
 
     noteService.updateNote(changedNote).then((note) => {
       setNotes(notes.map((n) => (n.id === note.id ? note : n)));
+    });
+  };
+
+  const deleteNote = (note: note) => {
+    noteService.deleteNote(note).then(() => {
+      setNotes(notes.filter((n) => n.id !== note.id));
     });
   };
 
@@ -52,6 +61,7 @@ const NotesContainer = () => {
               key={note.id}
               note={note}
               toggleNoteImportance={toggleNoteImportance}
+              deleteNote={deleteNote}
             />
           );
         })}
